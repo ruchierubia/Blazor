@@ -10,8 +10,6 @@
     <Folder Include="Components\Shared\" />
     <Folder Include="Components\Pages\Auth\" />
     <Folder Include="Components\Pages\Employee\" />
-    <Folder Include="Models\" />
-    <Folder Include="Services\Auth\" />
   </ItemGroup>
 
 </Project>

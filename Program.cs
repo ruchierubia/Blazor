@@ -1,4 +1,5 @@
 using BlazorEmployeeManagement.Components;
+using BlazorEmployeeManagement.Services.Auth.Temp;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,10 @@ builder.Services.AddAuthentication("Cookies")
     {
         options.LoginPath = "/login";
     });
+
+builder.Services.AddAuthorization();
+
+builder.Services.AddSingleton<ITempAuthService, TempAuthService>();
 
 var app = builder.Build();
 
