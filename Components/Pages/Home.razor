@@ -1,7 +1,48 @@
 ﻿@page "/"
-
+@rendermode InteractiveServer
 <PageTitle>Employee Management</PageTitle>
 
 <h1>Employee Management</h1>
 
 <p>Welcome to employee management system</p>
+<p>This application will be used to manage employees</p>
+
+<hr/>
+<h3>Application Status</h3>
+<p>Current employees: @employeeCount</p>
+
+<button @onclick="AddEmployee">
+    Add Employee
+</button>
+
+<hr />
+<h3>Employee Input</h3>
+<input @bind="emplyeeName" @bind:event="oninput"/>
+<p>Employee Name: @emplyeeName</p>
+
+<hr/>
+
+<h3>Object Name</h3>
+<input @bind="employee.Name" @bind:event="oninput" />
+<p> Employee Name : @employee.Name</p>
+
+@code
+{
+    private int employeeCount = 0;
+    private string emplyeeName = "";
+    private Employee employee = new();
+
+    private void AddEmployee()
+    {
+        employeeCount++;
+    }
+
+
+    private class Employee
+    {
+
+        public string? Name { get; set; } = "";
+
+    }
+
+}
