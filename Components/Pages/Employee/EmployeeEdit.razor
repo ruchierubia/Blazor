@@ -1,0 +1,92 @@
+﻿@page "/employees/edit/{Id:int}"
+@using BlazorEmployeeManagement.Models.Temp
+@using BlazorEmployeeManagement.Services.Auth.Temp
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize]
+@rendermode InteractiveServer
+@inject ITempEmployeeService TempEmployeeService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit Employee</PageTitle>
+
+@if (_employee is null)
+{
+    <h1>Employee Not Found</h1>
+
+    <a href="/employees" class="btn btn-secondary">
+        Back to Employees
+    </a>
+}
+else
+{
+    <h1>Edit Employee</h1>
+
+    <EditForm Model="_employee" OnValidSubmit="UpdateEmployee"
+        FormName="edit-employee">
+        <DataAnnotationsValidator />
+
+        <ValidationSummary />
+
+        <div class="mb-3">
+            <label>First Name</label>
+
+            <InputText class="form-control"
+                       @bind-Value="_employee.FirstName" />
+        </div>
+
+        <div class="mb-3">
+            <label>Last Name</label>
+
+            <InputText class="form-control"
+                       @bind-Value="_employee.LastName" />
+        </div>
+
+        <div class="mb-3">
+            <label>Email</label>
+
+            <InputText class="form-control"
+                       @bind-Value="_employee.Email" />
+        </div>
+
+        <div class="mb-3">
+            <label>Department</label>
+
+            <InputText class="form-control"
+                       @bind-Value="_employee.Department" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Save Changes
+        </button>
+
+        <a href="/employees" class="btn btn-secondary">
+            Cancel
+        </a>
+    </EditForm>
+}
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+    private TempEmployee? _employee;
+
+    protected override void OnInitialized()
+    {
+        _employee = TempEmployeeService.GetEmployeeById(Id);
+    }
+
+    private void UpdateEmployee()
+    {
+        if (_employee is null)
+        {
+            return;
+        }
+
+        TempEmployeeService.UpdateEmployee(_employee);
+
+        NavigationManager.NavigateTo("/employees");
+    }
+
+}

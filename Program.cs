@@ -20,9 +20,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 builder.Services.AddAuthorization();
-
-builder.Services.AddScoped<ITempAuthService, TempAuthService>();
-builder.Services.AddScoped<ITempEmployeeService, TempEmployeeService>();
+// singleton for in memory 
+builder.Services.AddSingleton<ITempAuthService, TempAuthService>();
+builder.Services.AddSingleton<ITempEmployeeService, TempEmployeeService>();
 
 var app = builder.Build();
 

@@ -10,6 +10,9 @@
 <PageTitle>Employees</PageTitle>
 
 <h1>Employees</h1>
+<a href="/employees/create" class="btn btn-primary mb-3">
+    Create Employee
+</a>
 
 @if (_employees.Count == 0)
 {
@@ -25,6 +28,7 @@ else
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Department</th>
+                <th>Action</th>
             </tr>
 
         </thead>
@@ -36,6 +40,13 @@ else
                 <td>@employee.LastName</td>
                 <td>@employee.Email</td>
                 <td>@employee.Department</td>
+                <td>
+                    <a href="/employees/edit/@employee.Id" class="btn btn-sm btn-primary">Edit</a>
+                    <button class="btn btn-sm btn-danger"
+                            @onclick="() => DeleteEmployee(employee.Id)">
+                        Delete
+                    </button>
+                </td>
 
             </tr>
             }
@@ -47,6 +58,13 @@ else
     private List<TempEmployee> _employees = [];
     protected override void OnInitialized()
     {
+        _employees = TempEmployeeService.GetEmployees();
+    }
+
+    private void DeleteEmployee(int id)
+    {
+        TempEmployeeService.DeleteEmployee(id);
+
         _employees = TempEmployeeService.GetEmployees();
     }
 

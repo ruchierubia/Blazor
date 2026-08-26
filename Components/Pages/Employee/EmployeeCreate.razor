@@ -1,0 +1,64 @@
+﻿@page "/employees/create"
+@using BlazorEmployeeManagement.Models.Temp
+@using BlazorEmployeeManagement.Services.Auth.Temp
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+@rendermode InteractiveServer
+
+@inject ITempEmployeeService TempEmployeeService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create Employee</PageTitle>
+
+<h1>Create Employee</h1>
+
+<EditForm Model="_employee" 
+    OnValidSubmit="CreateEmployee"
+    FormName="create-employee">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label>First Name</label>
+        <InputText class="form-control"
+                   @bind-Value="_employee.FirstName" />
+    </div>
+
+    <div class="mb-3">
+        <label>Last Name</label>
+        <InputText class="form-control"
+                   @bind-Value="_employee.LastName" />
+    </div>
+
+    <div class="mb-3">
+        <label>Email</label>
+        <InputText class="form-control"
+                   @bind-Value="_employee.Email" />
+    </div>
+
+    <div class="mb-3">
+        <label>Department</label>
+        <InputText class="form-control"
+                   @bind-Value="_employee.Department" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Create
+    </button>
+
+    <a href="/employees" class="btn btn-secondary">
+        Cancel
+    </a>
+</EditForm>
+
+@code
+{
+    private readonly TempEmployee _employee = new();
+
+    private void CreateEmployee()
+    {
+        TempEmployeeService.AddEmployee(_employee);
+
+        NavigationManager.NavigateTo("/employees");
+    }
+}
