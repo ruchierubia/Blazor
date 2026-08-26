@@ -1,0 +1,37 @@
+﻿@using BlazorEmployeeManagement.Models.Temp
+
+
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">
+            @Employee.FirstName @Employee.LastName
+        </h5>
+
+        <p class="card-text">
+            <strong>Email:</strong> @Employee.Email
+        </p>
+
+        <p class="card-text">
+            <strong>Department:</strong> @Employee.Department
+        </p>
+
+        <button class="btn btn-danger"
+                @onclick="DeleteEmployee">
+            Delete
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public TempEmployee Employee { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback<int> OnDelete { get; set; }
+
+    private async Task DeleteEmployee()
+    {
+        await OnDelete.InvokeAsync(Employee.Id);
+    }
+
+}
