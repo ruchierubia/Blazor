@@ -1,5 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization;
+@using Microsoft.AspNetCore.Authorization;
 @page "/"
+@attribute [Authorize]
 @rendermode InteractiveServer
 <PageTitle>Employee Management</PageTitle>
 
