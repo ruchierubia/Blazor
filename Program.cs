@@ -21,7 +21,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddSingleton<ITempAuthService, TempAuthService>();
+builder.Services.AddScoped<ITempAuthService, TempAuthService>();
+builder.Services.AddScoped<ITempEmployeeService, TempEmployeeService>();
 
 var app = builder.Build();
 
