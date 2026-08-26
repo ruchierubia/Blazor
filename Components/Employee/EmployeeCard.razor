@@ -15,6 +15,11 @@
             <strong>Department:</strong> @Employee.Department
         </p>
 
+        <a href="/employees/edit/@Employee.Id"
+           class="btn btn-primary">
+            Edit
+        </a>
+
         <button class="btn btn-danger"
                 @onclick="DeleteEmployee">
             Delete
