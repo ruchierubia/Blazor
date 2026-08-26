@@ -72,7 +72,7 @@ else
     public int Id { get; set; }
     private TempEmployee? _employee;
 
-    protected override void OnInitialized()
+    protected override void OnParametersSet()
     {
         _employee = TempEmployeeService.GetEmployeeById(Id);
     }
