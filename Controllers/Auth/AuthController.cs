@@ -42,5 +42,11 @@ namespace BlazorEmployeeManagement.Controllers.Auth
 
             return Redirect("/");
         }
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Redirect("/login");
+        }
     }
 }
