@@ -1,4 +1,5 @@
-﻿@page "/"
+﻿@using Microsoft.AspNetCore.Components.Authorization;
+@page "/"
 @rendermode InteractiveServer
 <PageTitle>Employee Management</PageTitle>
 
@@ -25,6 +26,30 @@
 <h3>Object Name</h3>
 <input @bind="employee.Name" @bind:event="oninput" />
 <p> Employee Name : @employee.Name</p>
+
+<AuthorizeView>
+    <Authorized>
+        <h3>Authentication Test</h3>
+
+        <p>
+            Logged in as: @context.User.Identity?.Name
+        </p>
+
+        <p>
+            Authenticated: @context.User.Identity?.IsAuthenticated
+        </p>
+
+        <p>
+            Role: @context.User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value
+        </p>
+    </Authorized>
+
+    <NotAuthorized>
+        <h3>Authentication Test</h3>
+
+        <p>You are not logged in.</p>
+    </NotAuthorized>
+</AuthorizeView>
 
 @code
 {
