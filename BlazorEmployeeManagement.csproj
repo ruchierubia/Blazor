@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Components\Shared\" />
-    <Folder Include="Components\Pages\Employee\" />
   </ItemGroup>
 
 </Project>
