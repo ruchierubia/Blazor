@@ -2,6 +2,7 @@
 @using BlazorEmployeeManagement.Models.Temp
 @using BlazorEmployeeManagement.Services.Auth.Temp
 @using Microsoft.AspNetCore.Authorization
+@using BlazorEmployeeManagement.Services.Cache
 
 @attribute [Authorize]
 @rendermode InteractiveServer
@@ -71,10 +72,26 @@ else
     [Parameter]
     public int Id { get; set; }
     private TempEmployee? _employee;
+    @inject ICache _cache;
+    private string employeeCacheKey = string.Empty;
+
 
     protected override void OnParametersSet()
     {
-        _employee = TempEmployeeService.GetEmployeeById(Id);
+        employeeCacheKey = $"employee:{Id}";
+
+        var employee = _cache.Get<TempEmployee>(employeeCacheKey);
+
+        if (employee != null)
+        {
+            _employee = employee;
+        }
+        else
+        {
+
+            _employee = TempEmployeeService.GetEmployeeById(Id);
+            _cache.Set(employeeCacheKey, _employee);
+        }
     }
 
     private void UpdateEmployee()
@@ -85,7 +102,7 @@ else
         }
 
         TempEmployeeService.UpdateEmployee(_employee);
-
+        _cache.Set(employeeCacheKey, _employee);
         NavigationManager.NavigateTo("/employees");
     }
 

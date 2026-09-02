@@ -1,5 +1,7 @@
 using BlazorEmployeeManagement.Components;
 using BlazorEmployeeManagement.Services.Auth.Temp;
+using BlazorEmployeeManagement.Services.Cache;
+using BlazorEmployeeManagement.Services.Cache.Temp;
 using BlazorEmployeeManagement.Services.Email;
 using BlazorEmployeeManagement.Services.Email.Temp;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -25,6 +27,24 @@ builder.Services.AddAuthorization();
 // singleton for in memory 
 builder.Services.AddSingleton<ITempAuthService, TempAuthService>();
 builder.Services.AddSingleton<ITempEmployeeService, TempEmployeeService>();
+
+
+
+//Cache 
+
+//builder.Services.AddSingleton<ICache, ManualCache>();
+
+builder.Services.AddMemoryCache();
+
+builder.Services.AddSingleton<ICache, MemoryCacheService>();
+
+//builder.Services.AddStackExchangeRedisCache(options =>
+//{
+//    options.Configuration =
+//        builder.Configuration.GetConnectionString("Redis");
+//});
+
+//builder.Services.AddSingleton<ICache, RedisCacheService>();
 
 // Email queue
 builder.Services.AddSingleton<IEmailQueue, TempEmailQueue>();
