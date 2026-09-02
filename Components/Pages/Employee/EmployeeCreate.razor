@@ -1,6 +1,7 @@
 ﻿@page "/employees/create"
 @using BlazorEmployeeManagement.Models.Temp
 @using BlazorEmployeeManagement.Services.Auth.Temp
+@using BlazorEmployeeManagement.Services.Email
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize]
 @rendermode InteractiveServer
@@ -54,10 +55,20 @@
 @code
 {
     private readonly TempEmployee _employee = new();
+    @inject IEmailQueue EmailQueue
 
-    private void CreateEmployee()
+    private async Task CreateEmployee()
     {
         TempEmployeeService.AddEmployee(_employee);
+
+        var email = new TempEmailMessage
+        {
+            To = _employee.Email,
+            Subject = "Welcome to the company",
+            Body = $"Hello {_employee.FirstName}, welcome to the company!"
+        };
+
+        await EmailQueue.QueueAsync(email);
 
         NavigationManager.NavigateTo("/employees");
     }

@@ -1,5 +1,7 @@
 using BlazorEmployeeManagement.Components;
 using BlazorEmployeeManagement.Services.Auth.Temp;
+using BlazorEmployeeManagement.Services.Email;
+using BlazorEmployeeManagement.Services.Email.Temp;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +25,15 @@ builder.Services.AddAuthorization();
 // singleton for in memory 
 builder.Services.AddSingleton<ITempAuthService, TempAuthService>();
 builder.Services.AddSingleton<ITempEmployeeService, TempEmployeeService>();
+
+// Email queue
+builder.Services.AddSingleton<IEmailQueue, TempEmailQueue>();
+
+// Email sender
+builder.Services.AddSingleton<IEmailSender, TempEmailSender>();
+
+// Background email processor
+builder.Services.AddHostedService<TempEmailBackgroundService>();
 
 var app = builder.Build();
 
